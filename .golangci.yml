@@ -1,0 +1,68 @@
+linters-settings:
+  funlen:
+    lines: 200
+    statements: 200
+  lll:
+    line-length: 240
+  cyclop:
+    max-complexity: 41
+    package-average: 0.0
+    skip-tests: true
+  gocognit:
+    min-complexity: 50
+  gomodguard:
+    # https://golangci-lint.run/usage/linters/#gomodguard
+    allowed:
+      modules:
+        - github.com/go-resty/resty/v2
+        - github.com/google/uuid
+        - github.com/gorilla/websocket
+        - github.com/spf13/cobra
+      domains:
+        - golang.org
+
+linters:
+  # Disable all linters.
+  # Default: false
+  disable-all: true
+  # Enable specific linter
+  # https://golangci-lint.run/usage/linters/#enabled-by-default
+  enable:
+    - asciicheck #标识符的名称中是否包含非ASCII字符
+    - errcheck #未经检查的错误
+    - gosimple #简化代码
+    - govet  #检查发现可能的bug或者可疑的构造
+    - ineffassign  #检测无效赋值
+    - staticcheck  #目前golang默认的代码检测，常规检测
+    - typecheck #类型检查
+    - unused  #检查未使用的变量，方法
+    - bodyclose #检查http body是否关闭
+    - durationcheck # 检查多个时间相乘
+    - errname #检查错误是否以Err为前缀，错误类型是否以Error为后缀
+    - exhaustive # 检查枚举语义问题
+    - exportloopref #检查指针变量循环引用
+    # - forbidigo #禁止特殊的语法 ， 默认：^(fmt\.Print.*|print|println)$
+    - forcetypeassert # 类型断言，需要检查。 _ = a.(int) // type assertion must be checked
+    - funlen # 方法长度
+    - gci #包导入顺序并使其始终具有确定性
+    - gocognit #检查代码的复杂性 例如; 多层for循环嵌套
+    - godox #代码中包含 FIXME,TODO 会进行提醒,TODO/BUG/FIXME
+    - gofumpt #格式化代码工具，比gofmt更严格，用来代替gofmt
+    - lll #报告长行
+    - misspell #检查拼写错误的单词
+    - goimports #检查导入语句的格式是否符合“goimport”命令。在自动修复模式下重新格式化导入
+    - gomodguard  #gomod 管理
+    - nestif #检查深层次的嵌套
+    - tagalign #结构标签是否对齐
+    - unconvert #删除不必要的类型转换
+    - unparam  # 提示未使用的参数
+    - stylecheck # 代码检测，可以代替golint
+    - wastedassign  #查找浪费的类型申明
+    - whitespace #函数if、for 等函数开头和结尾处是否有不必要的换行符
+    - cyclop # 检查包和循环的复杂性，
+  # Enable only fast linters from enabled linters set (first run won't be fast)
+  # Default: false
+  fast: true
+
+
+# https://golangci-lint.run/usage/linters/

@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+# 当前项目git里配置hooks目录,命令: git config core.hooksPath .githooks
+
+# echo "$(dirname $0)" #获取脚本所在目录
+# echo "$(pwd)" #获取当前执行的目录
+
+# 查询大文件
+find_big_file=" find ./ ( -name .git -prune ) -o ( -type f -size +10M  -print0 ) "
+find_big_file_result=$(${find_big_file})
+# echo "${find_big_file_result[*]}"
+if [[ ${#find_big_file_result} -gt 3 ]]; then 
+    printf "目录包含大于1M的文件:\n" 
+    echo "${find_big_file_result}"
+    exit 1
+fi
+
+
+#测试lint
+golangci-lint run --allow-parallel-runners   ./...
+if [[ $? != 0 ]]; then
+    printf "代码检测失败\n"
+    exit 1
+fi
+
+unset find_big_file
+unset find_big_file_result
